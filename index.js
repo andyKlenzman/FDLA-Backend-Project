@@ -12,8 +12,9 @@ app.use(express.json());
 app.use(morgan("dev"));
 initdb();
 
-const server = app.listen("4000", () => {
-  console.log("App is listening at http://localhost:4000");
+const PORT = process.env.PORT || 4000;
+const server = app.listen(PORT, () => {
+  console.log(`server started on port ${PORT}`);
 });
 
 app.use("/", mainRoute);
