@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Events feed</title>
+  <id>urn:uuid:d81b7e1b-3bc5-4a8b-afd2-c60b93022ded</id>
+  <updated>2023-10-23T20:15:48.042Z</updated>
+  <link rel="self" href="feed.fs-medien.info/feed" />
+
+  <entry>
+    <title>Garden night</title>
+    <id>urn:uuid:75e661d3-9d63-46e2-89da-535b85b94e35</id>
+    <content type="text">Free flowers!</content>
+    <published>2023-10-03T10:03:08.000Z</published>
+    <updated>2023-10-23T20:16:03.828Z</updated>
+    <author>
+      <name>Julia Lang</name>
+    </author>
+    <source>
+      <id>https://gioele.uber.space/</id>
+      <title>Events feed</title>
+      <updated>2023-10-23T18:16:04.849Z</updated>
+    </source>
+  </entry>
+  <entry>
+    <title>Atom feed celebration</title>
+    <id>urn:uuid:351ff8ef-edfb-4fca-9186-96abaef2c3f0</id>
+    <content type="text">
+      Let's celebrate the deployed atom feed
+2023-10-30T14:00
+    </content>
+    <published>2023-10-23T21:29:06.713Z</published>
+    <updated>2023-10-23T21:29:06.713Z</updated>
+    <author>
+      <name>Kai Niebes</name>
+    </author>
+  </entry>
+</feed>

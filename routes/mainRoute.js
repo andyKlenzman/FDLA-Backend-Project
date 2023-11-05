@@ -11,7 +11,11 @@ import createHttpError from "http-errors";
 
 const mainRoute = Router();
 const __dirname = createDirname(import.meta.url);
-const atomFilePath = path.join(__dirname, "../atomfile/atom.xml");
+const atomFilePaths = [
+  path.join(__dirname, "../atomfile/atom.xml"),
+  path.join(__dirname, "../atomfile/atom2.sec"),
+  path.join(__dirname, "../atomfile/atom3.sec")
+];
 let sql;
 
 mainRoute
@@ -30,7 +34,7 @@ mainRoute
         },
       });
 
-      //Add each databse entry into the atom file
+      //Add each database entry into the atom file
       rows.forEach((row) => {
         const { title, link, id, published, updated, summary, author } = row;
         feed.addItem({
@@ -49,10 +53,15 @@ mainRoute
       });
 
       // Write to the file, and if the write is successful, send it
-      fs.writeFile(atomFilePath, feed.atom1(), (err) => {
+      fs.writeFile(atomFilePaths[1], feed.atom1(), (err) => {
         if (err) next(err);
         else {
-          res.status(200).sendFile(atomFilePath);
+          fs.readFile(atomFilePaths[1], (err, data) => {
+            if (err) next(err);
+            else {
+              res.status(200).send(data.toString());
+            }
+          });
         }
       });
     });
@@ -76,31 +85,40 @@ mainRoute
     res.status(200).send("New record entered");
   });
 
-// Injests information from outside Atom files and adds it to our DB
-mainRoute.route("/atom").put((req, res) => {
-  const atomURL = req.body.atomURL;
-  fetch(atomURL)
-    .then((response) => response.text())
-    .then((str) => {
-      parseString(str, function (err, result) {
-        const atomData = extractAtomData(result);
-
-        atomData.forEach((data) => {
-          const { id, title, link, published, updated, summary, author } = data;
-
-          sql = `INSERT INTO events(id, title, link, published, updated, summary, author) VALUES (?,?,?,?,?,?,?)`;
-          db.run(
-            sql,
-            [id, title, link, published, updated, summary, author.name[0]],
-            (err) => {
-              next(err);
-            }
-          );
-
-          res.status(200).send("New ATOM file entered");
-        });
+const processAtomFile = (filePath) => {
+  fs.readFile(filePath, (err, data) => {
+    if (err) {
+      console.error(err);
+    } else {
+      parseString(data, function (err, result) {
+        if (err) {
+          console.error(err);
+        } else {
+          const atomData = extractAtomData(result);
+          atomData.forEach((data) => {
+            const { id, title, link, published, updated, summary, author } = data;
+            sql = `INSERT INTO events(id, title, link, published, updated, summary, author) VALUES (?,?,?,?,?,?,?)`;
+            db.run(
+              sql,
+              [id, title, link, published, updated, summary, author.name[0]],
+              (err) => {
+                if (err) {
+                  console.error(err);
+                }
+              }
+            );
+          });
+        }
       });
-    });
+    }
+  });
+};
+
+mainRoute.route("/processAtomFiles").get((req, res, next) => {
+  atomFilePaths.forEach((filePath) => {
+    processAtomFile(filePath);
+  });
+  res.status(200).send("Processing atom files");
 });
 
 export default mainRoute;

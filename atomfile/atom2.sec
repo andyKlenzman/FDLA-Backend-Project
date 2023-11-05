@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://fdla-event-manager.fly.dev/feed</id>
+    <title>Event Feed</title>
+    <updated>2023-10-29T16:48:47.496Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://fdla-event-manager.fly.dev/feed"/>
+    <subtitle>This is an amazing feed informing you about upcoming events.</subtitle>
+    <entry>
+        <title type="html"><![CDATA[Garden night]]></title>
+        <id>urn:uuid:1437885d-308d-421f-a217-1324b0876451</id>
+        <link href="https://fdla-event-manager.fly.dev/events/1437885d-308d-421f-a217-1324b0876451"/>
+        <updated>2023-10-04T16:09:58.000Z</updated>
+        <author>
+            <name>Julia Lang</name>
+        </author>
+        <published>2023-10-03T10:03:08.000Z</published>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Atom feed celebration]]></title>
+        <id>urn:uuid:05e6fdac-89a4-433c-9d35-80c99611c5ee</id>
+        <link href="https://fdla-event-manager.fly.dev/events/05e6fdac-89a4-433c-9d35-80c99611c5ee"/>
+        <updated>2023-10-23T21:29:06.713Z</updated>
+        <author>
+            <name>Kai Niebes</name>
+        </author>
+        <published>2023-10-23T21:29:06.713Z</published>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[The Event]]></title>
+        <id>urn:uuid:d66801e1-b2d2-49f2-9043-eb5c784a9e11</id>
+        <link href="https://fdla-event-manager.fly.dev/events/d66801e1-b2d2-49f2-9043-eb5c784a9e11"/>
+        <updated>2023-10-29T13:47:13.192Z</updated>
+        <author>
+            <name>Unknown author</name>
+        </author>
+        <published>2023-10-29T13:47:13.192Z</published>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Doodle Dash]]></title>
+        <id>urn:uuid:ff2590c6-aa50-43c5-b79b-791dce6824f0</id>
+        <link href="https://fdla-event-manager.fly.dev/events/ff2590c6-aa50-43c5-b79b-791dce6824f0"/>
+        <updated>2023-10-29T13:49:32.328Z</updated>
+        <author>
+            <name>ChatGPT</name>
+        </author>
+        <published>2023-10-29T13:49:32.328Z</published>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[The Great Pillow Fight Extravaganza]]></title>
+        <id>urn:uuid:0993c799-f6dd-49b8-8d11-78950c531df5</id>
+        <link href="https://fdla-event-manager.fly.dev/events/0993c799-f6dd-49b8-8d11-78950c531df5"/>
+        <updated>2023-10-29T13:49:32.875Z</updated>
+        <author>
+            <name>ChatGPT</name>
+        </author>
+        <published>2023-10-29T13:49:32.875Z</published>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[The Great Cake-off]]></title>
+        <id>urn:uuid:95263874-50b0-45a4-a275-e164a01d3055</id>
+        <link href="https://fdla-event-manager.fly.dev/events/95263874-50b0-45a4-a275-e164a01d3055"/>
+        <updated>2023-10-29T13:50:02.293Z</updated>
+        <author>
+            <name>ChatGPT</name>
+        </author>
+        <published>2023-10-29T13:50:02.293Z</published>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Super Hero Showdown]]></title>
+        <id>urn:uuid:89c6ca7d-9c83-490f-9a17-5fc8efbb26b8</id>
+        <link href="https://fdla-event-manager.fly.dev/events/89c6ca7d-9c83-490f-9a17-5fc8efbb26b8"/>
+        <updated>2023-10-29T13:50:02.700Z</updated>
+        <author>
+            <name>ChatGPT</name>
+        </author>
+        <published>2023-10-29T13:50:02.700Z</published>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[The Great Food Frenzy]]></title>
+        <id>urn:uuid:bd4c6b1f-707a-4908-a45c-ef1eca6a00de</id>
+        <link href="https://fdla-event-manager.fly.dev/events/bd4c6b1f-707a-4908-a45c-ef1eca6a00de"/>
+        <updated>2023-10-29T13:50:31.592Z</updated>
+        <author>
+            <name>ChatGPT</name>
+        </author>
+        <published>2023-10-29T13:50:31.592Z</published>
+    </entry>
+</feed>
