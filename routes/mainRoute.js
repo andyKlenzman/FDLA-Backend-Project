@@ -115,7 +115,8 @@ const processAtomFile = (filePath) => {
 };
 
 mainRoute.route("/processAtomFiles").get((req, res, next) => {
-  atomFilePaths.forEach((filePath) => {
+  atomFilePaths.forEach((filePath, index) => {
+    console.log(`Processing file ${index + 1}: ${filePath}`);
     processAtomFile(filePath);
   });
   res.status(200).send("Processing atom files");
