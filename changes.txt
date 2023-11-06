@@ -1,0 +1,23 @@
+All changes are in the file mainRoute.js
+
+const atomFilePaths = [
+  path.join(__dirname, "../atomfile/atom.xml"),
+  path.join(__dirname, "../atomfile/atom2.sec"),
+  path.join(__dirname, "../atomfile/atom3.sec")
+];
+created an array called atomFilePaths, which contains the file paths to three Atom files – one our and from other groups 
+
+============================
+fs.writeFile(atomFilePath, feed.atom1(), (err) => {
+changed variable name here because we use 3 paths now
+
+=======================
+created the function processAtomFile
+to handle the integration of data from local Atom files into the database. To read files from other groups
+
+==============
+changed final block   
+
+mainRoute.route("/processAtomFiles")
+
+to iterate over the atomFilePaths array and process each file using the new processAtomFile function
