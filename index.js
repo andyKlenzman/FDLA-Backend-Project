@@ -28,7 +28,7 @@ app.use((err, req, res, next) => {
   res.json({ error: err });
 });
 
-app.use(function (req, res, next) {
+app.use(function (req, res, next) { 
   next(createHttpError(404));
 });
 

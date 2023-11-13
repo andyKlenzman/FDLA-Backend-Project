@@ -8,6 +8,9 @@ import { randomUUID } from "crypto";
 import { parseString } from "xml2js";
 import extractAtomData from "../utils/extractAtomData.js";
 import createHttpError from "http-errors";
+import atomURLS from "../atomfile/atomURLS.js";
+import { insertRecord } from "../utils/insertRecord.js";
+import { fetchWithTimeout } from "../utils/fetchWithTimeout.js";
 
 const mainRoute = Router();
 const __dirname = createDirname(import.meta.url);
@@ -50,7 +53,7 @@ mainRoute
 
       // Write to the file, and if the write is successful, send it
       fs.writeFile(atomFilePath, feed.atom1(), (err) => {
-        if (err) next(err);
+        if (err) return next(err);
         else {
           res.status(200).sendFile(atomFilePath);
         }
@@ -58,10 +61,16 @@ mainRoute
     });
   })
   .post((req, res, next) => {
+    console.log()
     const currentDate = new Date();
     const { title, link, summary, author } = req.body;
     if (!title || !link || !summary || !author) {
-      return next(createHttpError(400, "Missing Information. Fill out missing fields and try again."));
+      return next(
+        createHttpError(
+          400,
+          "Missing Information. Fill out missing fields and try again."
+        )
+      );
     }
 
     sql = `INSERT INTO events(id, title, link, published, updated, summary, author) VALUES (?,?,?,?,?,?,?)`;
@@ -77,30 +86,37 @@ mainRoute
   });
 
 // Injests information from outside Atom files and adds it to our DB
-mainRoute.route("/atom").put((req, res) => {
-  const atomURL = req.body.atomURL;
-  fetch(atomURL)
-    .then((response) => response.text())
-    .then((str) => {
-      parseString(str, function (err, result) {
-        const atomData = extractAtomData(result);
 
-        atomData.forEach((data) => {
-          const { id, title, link, published, updated, summary, author } = data;
+mainRoute.route("/atom").put(async (req, res, next) => {
+  // const atomURL = req.body.atomURL;
+  const atomURL = atomURLS[4];
 
-          sql = `INSERT INTO events(id, title, link, published, updated, summary, author) VALUES (?,?,?,?,?,?,?)`;
-          db.run(
-            sql,
-            [id, title, link, published, updated, summary, author.name[0]],
-            (err) => {
-              next(err);
-            }
-          );
+  try {
+    const response = await fetchWithTimeout(atomURL);
 
-          res.status(200).send("New ATOM file entered");
-        });
+    if (!response.ok) {
+      throw new Error(`Network response was not ok: ${response.statusText}`);
+    }
+
+    const str = await response.text();
+    const result = await new Promise((resolve, reject) => {
+      parseString(str, (err, result) => {
+        if (err) reject(err);
+        resolve(result);
       });
     });
+
+    const atomData = await extractAtomData(result);
+
+    const insertPromises = atomData.map((data) => insertRecord(data));
+
+    await Promise.all(insertPromises);
+
+    res.status(200).send("New ATOM file entered");
+  } catch (error) {
+    // Handle any other errors that might occur during the fetch, parsing, or database operations
+    return next(error);
+  }
 });
 
 export default mainRoute;

@@ -1,24 +1,40 @@
-const extractAtomData = (rawAtomData) => {
+import { dbTypeChecking } from "./dbTypeChecking.js";
+
+const extractAtomData = async (rawAtomData) => {
   let processedData = [];
-  const atomData = rawAtomData.feed.entry;
 
-  atomData.forEach((data) => {
-    const { title, link, id, published, updated, summary, author } = data;
+  return new Promise((resolve, reject) => {
+    const atomData = rawAtomData.feed.entry;
 
-    let individualEntry = {
-      title: title[0],
-      link: link[0].$.href,
-      id: id[0],
-      published: published[0],
-      updated: updated[0],
-      summary: summary[0],
-      author: author[0],
-    };
+    if (!Array.isArray(atomData)) {
+      const err = new Error(`Atom data does not match required format`);
+      console.error(err);
+      reject(err);
+    }
 
-    processedData.push(individualEntry);
+    atomData.forEach((data) => {
+      const { title, link, id, published, updated, summary, author } = data;
+
+      let individualEntry = {
+        title: title[0],
+        link: link[0].$.href,
+        id: id[0],
+        published: published[0],
+        updated: updated[0],
+        summary: summary[0],
+        author: author[0],
+      };
+
+      if (!dbTypeChecking(individualEntry)) {
+        const err = new Error(`Atom data does not match required format`);
+        console.error(err);
+        reject(err);
+      } else {
+        processedData.push(individualEntry);
+      }
+    });
+    resolve(processedData);
   });
-
-  return processedData;
 };
 
 export default extractAtomData;
